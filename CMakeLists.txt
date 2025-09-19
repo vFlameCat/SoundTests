@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
-project(CMakeSFMLProject LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+project(SoundTests)
+
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -12,6 +12,13 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
-target_compile_features(main PRIVATE cxx_std_17)
+add_executable(main)
+target_compile_features(main PRIVATE cxx_std_20)
 target_link_libraries(main PRIVATE SFML::Graphics)
+
+
+add_subdirectory(src)
+
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/7NA.mp3  ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/ComicSansMS.ttf  ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
