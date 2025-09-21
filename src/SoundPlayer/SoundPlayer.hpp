@@ -39,7 +39,7 @@ private:
 
     struct PlayerData {
 
-        float advance = 0.0;
+        double advance = 0.0;
         float pitch = 1.0;
 
         std::vector <float> soundSamples = std::vector <float> ();
