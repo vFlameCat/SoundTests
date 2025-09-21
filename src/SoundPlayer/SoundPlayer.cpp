@@ -113,13 +113,21 @@ void SoundPlayer::callbakcPlayer (ma_device* pDevice, void* pOutput, const void*
 
     for (ma_uint32 i = 0; i < frameCount; ++i) {
 
-        float floor = std::floor(playerData->advance);
-        
-        float a = playerData->soundSamples[floor];
-        float b = playerData->soundSamples[floor + 1];
-        float t = (playerData->advance - floor);
+        double advanceFloored = std::floor(playerData->advance);
+        long long id = static_cast<long long>(advanceFloored);
 
-        *(static_cast<float*>(pOutput) + i) = std::lerp(a, b, t);
+        if (id >= 0 && id + 1 < static_cast<long long>(playerData->soundSamples.size())) {  //more optimized realizations are possible
+
+            float a = playerData->soundSamples[id];
+            float b = playerData->soundSamples[id + 1];
+            float t = static_cast<float>(playerData->advance - advanceFloored);
+
+            *(static_cast<float*>(pOutput) + i) = std::lerp(a, b, t);
+        }
+        else {
+
+            *(static_cast<float*>(pOutput) + i) = 0.f;
+        }
 
         playerData->advance += playerData->pitch;
     }

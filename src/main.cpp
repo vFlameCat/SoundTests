@@ -54,11 +54,11 @@ int main() {
                 }
                 else if (keyPressed->scancode == sf::Keyboard::Scancode::Up) {
 
-                    player.adjustPitch(0.1);
+                    player.adjustPitch(0.1f);
                 }
                 else if (keyPressed->scancode == sf::Keyboard::Scancode::Down) {
 
-                    player.adjustPitch(-0.1);
+                    player.adjustPitch(-0.1f);
                 }
             }
         }
