@@ -1,1 +1,1 @@
-target_sources(main PRIVATE SoundPlayer.cpp)
+target_sources(${MAIN_TARGET} PRIVATE SoundPlayer.cpp)

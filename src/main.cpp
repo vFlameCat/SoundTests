@@ -28,11 +28,11 @@ int main() {
     window.setFramerateLimit(60);
 
 
-    SoundPlayer player("7NA.mp3");
+    SoundPlayer player("res/music/7NA.mp3");
     player.start();
 
 
-    sf::Font font("ComicSansMS.ttf"); 
+    sf::Font font("res/fonts/ComicSansMS.ttf"); 
     sf::Text text(font);
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);

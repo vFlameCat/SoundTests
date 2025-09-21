@@ -5,7 +5,7 @@
 #include <vector>
 #include <cmath>
 
-#include <miniaudio.h>
+#include <miniaudio.hpp>
 
 
 class SoundPlayer final {

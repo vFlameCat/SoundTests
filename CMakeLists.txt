@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
+set(MAIN_TARGET "main")
+add_executable(${MAIN_TARGET})
+
+
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -15,11 +19,7 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main)
-target_link_libraries(main PRIVATE SFML::Graphics)
-
-
-add_subdirectory(src)
+target_link_libraries(${MAIN_TARGET} PRIVATE SFML::Graphics)
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter \
@@ -27,12 +27,23 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror -Wno-un
                                         -Winline -Wmissing-include-dirs -Weffc++ -Wmain -Wcast-qual \
                                         -Wconversion -Wctor-dtor-privacy -Wformat-security -Wlogical-op \
                                         -Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith \
-                                        -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel \
-                                        -Wwrite-strings -Wno-comment")
+                                        -Wstrict-aliasing -Wstrict-null-sentinel -Wwrite-strings -Wno-comment")
                                         
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fno-omit-frame-pointer -fsanitize=address")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -mavx2 -pipe -DNDEBUG")
 
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/7NA.mp3  ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/ComicSansMS.ttf  ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#copy resources
+set(RESOURCES_FOLDER "res")
+file(GLOB_RECURSE RESOURCE_FILES "${RESOURCES_FOLDER}/*")
+foreach(RES_FILE ${RESOURCE_FILES})
+
+    string(REPLACE "${CMAKE_SOURCE_DIR}/" "" RELATIVE_PATH ${RES_FILE})
+    set(DEST_FILE "${CMAKE_BINARY_DIR}/${RELATIVE_PATH}")
+    
+    configure_file(${RES_FILE} ${DEST_FILE} COPYONLY)
+
+endforeach()
+
+
+add_subdirectory(src)
